@@ -6,6 +6,7 @@
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../iron-icons/av-icons.html">
 <link rel="import" href="../paper-ripple/paper-ripple.html">
+<link rel="import" href="../iron-a11y-keys/iron-a11y-keys.html">
 
 <!--
 A custom audio player with material paper style and clean design.
@@ -206,6 +207,8 @@ Custom property                             | Description                       
         align-self: flex-end;
       }
     </style>
+
+    <iron-a11y-keys id="a11y" target="[[target]]" keys="p" on-keys-pressed="playPause"></iron-a11y-keys>
 
     <div id="wrapper" class="layout-horizontal">
 
