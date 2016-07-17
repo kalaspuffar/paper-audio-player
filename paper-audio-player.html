@@ -6,7 +6,7 @@
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../iron-icons/av-icons.html">
 <link rel="import" href="../paper-ripple/paper-ripple.html">
-<link rel="import" href="../iron-a11y-keys/iron-a11y-keys.html">
+<link rel="import" href="../iron-a11y-keys-behavior/iron-a11y-keys-behavior.html">
 
 <!--
 A custom audio player with material paper style and clean design.
@@ -208,8 +208,6 @@ Custom property                             | Description                       
       }
     </style>
 
-    <iron-a11y-keys id="a11y" target="[[target]]" keys="p" on-keys-pressed="playPause"></iron-a11y-keys>
-
     <div id="wrapper" class="layout-horizontal">
 
       <div id="left"
@@ -258,6 +256,16 @@ Custom property                             | Description                       
   <script>
     Polymer({
       is: 'paper-audio-player',
+
+      //
+      // Component behaviors
+      behaviors: [Polymer.IronA11yKeysBehavior],
+
+      //
+      // Define component default attributes
+      hostAttributes: {
+        tabindex: 0
+      },
 
       //
       // Define public properties
@@ -313,6 +321,14 @@ Custom property                             | Description                       
         'audio.error'           : '_onError'
       },
 
+      keyBindings: {
+        'space': 'playPause',
+        'enter': 'playPause',
+        'left': '_reverseSmall',
+        'right': '_skipSmall',
+        'down': '_reverseLarge',
+        'up': '_skipLarge'
+      },
 
       //
       // When element is created
@@ -353,6 +369,45 @@ Custom property                             | Description                       
         }
       },
 
+      // Move the play position back a small distance
+      _reverseSmall: function(e) {
+        var player = this;
+        var newTime = 0;
+        if(player.currentTime - player.smallSkip > 0) {
+          newTime = player.currentTime - player.smallSkip;
+        }
+        player._updatePlayPosition(newTime);
+      },
+
+      // Move the play position back a large distance
+      _reverseLarge: function(e) {
+        var player = this;
+        var newTime = 0;
+        if(player.currentTime - player.largeSkip > 0) {
+          newTime = player.currentTime - player.largeSkip;
+        }
+        player._updatePlayPosition(newTime);
+      },
+
+      // Move the play position forward a small distance
+      _skipSmall: function(e) {
+        var player = this;
+        var newTime = player.currentTime + player.timeLeft;
+        if(player.smallSkip < player.timeLeft) {
+          newTime = player.currentTime + player.smallSkip;
+        }
+        player._updatePlayPosition(newTime);
+      },
+
+      // Move the play position forward a large distance
+      _skipLarge: function(e) {
+        var player = this;
+        var newTime = player.currentTime + player.timeLeft;
+        if(player.largeSkip < player.timeLeft) {
+          newTime = player.currentTime + player.largeSkip;
+        }
+        player._updatePlayPosition(newTime);
+      },
 
       // Restart
 
