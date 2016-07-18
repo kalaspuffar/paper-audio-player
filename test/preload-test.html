@@ -74,14 +74,14 @@
     test('defines the "preload=metadata" property', function(done) {
       assert.equal(metaPreloadPlayer.preload, 'metadata');
       assert.equal(metaPreloadPlayer.$.audio.preload, 'metadata');
-      setTimeout(function(){
-        assert.isAbove(metaPreloadPlayer.$.audio.readyState, 0);
+      
+     metaPreloadPlayer.$.audio.addEventListener('loadeddata', function() { 
+     assert.isAbove(metaPreloadPlayer.$.audio.readyState, 0);
         assert.ok(metaPreloadPlayer.canBePlayed);
         assert.notOk(metaPreloadPlayer.isPlaying);
-        done();
-      }, 5000);
-    });
-
+      });
+      
+});
     test('defines the "preload=auto" property', function(done) {
       assert.equal(autoPreloadPlayer.preload, 'auto');
       assert.equal(autoPreloadPlayer.$.audio.preload, 'auto');
