@@ -20,18 +20,31 @@
                     src="http://nadikun.com/audio/suit-and-tie-oscar-wylde-remix.mp3"></paper-audio-player>
     </template>
 </test-fixture>
-<paper-audio-player id="nopreloadAutoplay"
+
+<test-fixture id="nopreloadAutoplay"> 
+   <template>
+        <paper-audio-player id="nopreloadAutoplay"
                     auto-play
                     preload="none"
                     src="http://nadikun.com/audio/suit-and-tie-oscar-wylde-remix.mp3"></paper-audio-player>
+    </template>
+</test-fixture>
 
-<paper-audio-player id="metapreload"
+<test-fixture id="metapreload"> 
+   <template>
+       <paper-audio-player id="metapreload"
                     preload="metadata"
                     src="http://nadikun.com/audio/suit-and-tie-oscar-wylde-remix.mp3"></paper-audio-player>
+    </template>
+</test-fixture>
 
-<paper-audio-player id="autopreload"
+<test-fixture id="autopreload"> 
+   <template>
+       <paper-audio-player id="autopreload"
                     preload="auto"
                     src="http://nadikun.com/audio/suit-and-tie-oscar-wylde-remix.mp3"></paper-audio-player>
+    </template>
+</test-fixture>
 
 <script>
   suite('<paper-audio-player>', function() {
