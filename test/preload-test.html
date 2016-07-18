@@ -31,12 +31,14 @@
                     src="http://nadikun.com/audio/suit-and-tie-oscar-wylde-remix.mp3"></paper-audio-player>
 
 <script>
-  var noPreloadPlayer = document.getElementById('nopreload');
-  var noPreloadAutoplayPlayer = document.getElementById('nopreloadAutoplay');
-  var metaPreloadPlayer = document.getElementById('metapreload');
-  var autoPreloadPlayer = document.getElementById('autopreload');
-
   suite('<paper-audio-player>', function() {
+    var noPreloadPlayer, noPreloadAutoplayPlayer, metaPreloadPlayer, autoPreloadPlayer;
+    setup(function() {
+        noPreloadPlayer = fixture('nopreload');
+        noPreloadAutoplayPlayer = fixture('nopreloadAutoplay');
+        metaPreloadPlayer = fixture('metapreload');
+        autoPreloadPlayer = fixture('autopreload');
+    });
 
     test('defines the "preload=none" property', function(done) {
       assert.equal(noPreloadPlayer.preload, 'none');
