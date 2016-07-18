@@ -13,10 +13,13 @@
 <body>
 
 <!-- Basic player -->
-<paper-audio-player id="nopreload"
+<test-fixture id="nopreload"> 
+   <template>
+       <paper-audio-player id="nopreload"
                     preload="none"
                     src="http://nadikun.com/audio/suit-and-tie-oscar-wylde-remix.mp3"></paper-audio-player>
-
+    </template>
+</test-fixture>
 <paper-audio-player id="nopreloadAutoplay"
                     auto-play
                     preload="none"
