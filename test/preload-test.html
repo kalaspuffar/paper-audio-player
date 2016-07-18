@@ -45,7 +45,7 @@
         assert.equal(noPreloadPlayer.$.audio.readyState, 0);
         assert.notOk(noPreloadPlayer.canBePlayed);
         done();
-      }, 2000);
+      }, 5000);
     });
 
     test('the "preload=none" property is ignored if autoPlay is set', function(done) {
@@ -55,7 +55,7 @@
         assert.ok(noPreloadAutoplayPlayer.canBePlayed);
         assert.notOk(noPreloadAutoplayPlayer.$.audio.paused);
         done();
-      }, 2000);
+      }, 5000);
     });
 
     test('dynamically changed audio file will not be pre-loaded', function(done) {
@@ -68,7 +68,7 @@
         assert.equal(noPreloadPlayer.$.audio.readyState, 0);
         assert.notOk(noPreloadPlayer.canBePlayed);
         done();
-      }, 2000);
+      }, 5000);
     });
 
     test('defines the "preload=metadata" property', function(done) {
@@ -79,7 +79,7 @@
         assert.ok(metaPreloadPlayer.canBePlayed);
         assert.notOk(metaPreloadPlayer.isPlaying);
         done();
-      }, 2000);
+      }, 5000);
     });
 
     test('defines the "preload=auto" property', function(done) {
