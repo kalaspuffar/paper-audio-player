@@ -90,7 +90,7 @@
       assert.equal(autoPreloadPlayer.$.audio.preload, 'auto');
       
       setTimeout(function() {  
-      assert.isAbove(Polymer.dom(autoPreloadPlayer.$.audio).readyState, 2);
+      assert.isAbove(autoPreloadPlayer.$.audio.readyState, 2);
         assert.ok(autoPreloadPlayer.canBePlayed);
         assert.notOk(autoPreloadPlayer.isPlaying);
         done();
