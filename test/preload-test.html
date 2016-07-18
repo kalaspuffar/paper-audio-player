@@ -44,6 +44,7 @@
       metaPreloadPlayer.$.audio.addEventListener('loadeddata', function() { 
         assert.equal(noPreloadPlayer.$.audio.readyState, 0);
         assert.notOk(noPreloadPlayer.canBePlayed);
+        done();
       });
     });
 
@@ -66,6 +67,7 @@
         assert.equal(noPreloadPlayer.$.audio.src, 'http://nadikun.com/audio/noclique-day2.wav');
         assert.equal(noPreloadPlayer.$.audio.readyState, 0);
         assert.notOk(noPreloadPlayer.canBePlayed);
+        done();
       });
     });
 
@@ -77,6 +79,7 @@
      assert.isAbove(metaPreloadPlayer.$.audio.readyState, 0);
         assert.ok(metaPreloadPlayer.canBePlayed);
         assert.notOk(metaPreloadPlayer.isPlaying);
+        done();
       });
       
 });
@@ -88,6 +91,7 @@
       assert.isAbove(autoPreloadPlayer.$.audio.readyState, 2);
         assert.ok(autoPreloadPlayer.canBePlayed);
         assert.notOk(autoPreloadPlayer.isPlaying);
+        done();
       });
     });
 
