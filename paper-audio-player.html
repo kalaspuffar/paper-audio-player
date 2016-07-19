@@ -377,6 +377,7 @@ Custom property                             | Description                       
           newTime = player.currentTime - player.smallSkip;
         }
         player._updatePlayPosition(newTime);
+        if (!player.isPlaying) player.$.audio.play();
       },
 
       // Move the play position back a large distance
@@ -387,6 +388,7 @@ Custom property                             | Description                       
           newTime = player.currentTime - player.largeSkip;
         }
         player._updatePlayPosition(newTime);
+        if (!player.isPlaying) player.$.audio.play();
       },
 
       // Move the play position forward a small distance
@@ -397,6 +399,7 @@ Custom property                             | Description                       
           newTime = player.currentTime + player.smallSkip;
         }
         player._updatePlayPosition(newTime);
+        if (!player.isPlaying) player.$.audio.play();
       },
 
       // Move the play position forward a large distance
@@ -407,6 +410,7 @@ Custom property                             | Description                       
           newTime = player.currentTime + player.largeSkip;
         }
         player._updatePlayPosition(newTime);
+        if (!player.isPlaying) player.$.audio.play();
       },
 
       // Restart
@@ -546,13 +550,22 @@ Custom property                             | Description                       
         var x = e.detail.x - player.$.center.getBoundingClientRect().left;
         var r = (x / player.$.center.getBoundingClientRect().width) * player.$.audio.duration;
 
-        player.currentTime = player.$.audio.currentTime = r;
-
-        var percentagePlayed = player.currentTime / player.$.audio.duration;
-        player.$.progress.style.transform = 'scaleX(' + percentagePlayed + ')';
+        this._updatePlayPosition(r);
 
         player.$.progress2.style.width = x + 'px';
       },
+
+      //
+      // Helper function
+      // updates the progress bar based on a time variable
+      _updatePlayPosition: function(newTime) {
+        var player = this;
+        player.currentTime = player.$.audio.currentTime = newTime;
+
+        var percentagePlayed = player.currentTime / player.$.audio.duration;
+        player.$.progress.style.transform = 'scaleX(' + percentagePlayed + ')';
+      },
+
 
       //
       // If src is changed when track is playing,
