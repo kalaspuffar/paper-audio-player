@@ -423,6 +423,10 @@ Custom property                             | Description                       
         player.isPlaying = false;
       },
 
+      pause: function() {
+      	  var player = this;
+      	  player.$.audio.pause();
+      }
 
       // when Player ended playing an audio file
 
