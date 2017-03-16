@@ -412,13 +412,13 @@ Custom property                             | Description                       
         var player = this;
 
         if ( player.canBePlayed ) {
-          return player.isPlaying ? player.$.audio.pause() : _startPlaying();
+          return player.isPlaying ? player.$.audio.pause() : player._startPlaying();
         } else if (player.preload === 'none') {
           // If player can't be played, because audio wasn't pre-loaded
           // due to the preload="none" property set,
           // load the audio file at this point and start playing it immediately
           player.$.audio.load();
-          _startPlaying();
+          player._startPlaying();
         }
       },
 
@@ -429,7 +429,7 @@ Custom property                             | Description                       
         if (!!e) e.preventDefault();
         var player = this;
         player.$.audio.currentTime = 0;
-        if ( !player.isPlaying ) _startPlaying();
+        if ( !player.isPlaying ) player._startPlaying();
       },
 
 
@@ -450,7 +450,7 @@ Custom property                             | Description                       
         // If player has auto-play attribute set,
         // it ignores preload="none" property and starts playing on load.
         // This behavior corresponds to the native audio element behavior.
-        if (player.autoPlay) _startPlaying();
+        if (player.autoPlay) player._startPlaying();
       },
 
 
@@ -488,7 +488,7 @@ Custom property                             | Description                       
         }
 
         player._updatePlayPosition(newTime);
-        if (!player.isPlaying) _startPlaying();
+        if (!player.isPlaying) player._startPlaying();
       },
 
 
@@ -567,7 +567,7 @@ Custom property                             | Description                       
 
         if (player.canBePlayed) {
           player._updateProgressBar(e);
-          if (!player.isPlaying) _startPlaying();
+          if (!player.isPlaying) player._startPlaying();
 
           // When preload="none" is being used,
           // player should first try to load the audio,
@@ -576,7 +576,7 @@ Custom property                             | Description                       
           player.$.audio.load();
           player.$.audio.addEventListener('loadedmetadata', function() {
             player._updateProgressBar(e);
-            if (!player.isPlaying) _startPlaying();
+            if (!player.isPlaying) player._startPlaying();
           }, false);
         }
       },
@@ -628,7 +628,7 @@ Custom property                             | Description                       
 
         if (player.isPlaying) {
           player.$.audio.pause();
-          _startPlaying();
+          player._startPlaying();
         }
       },
 
