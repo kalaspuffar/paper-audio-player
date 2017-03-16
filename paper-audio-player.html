@@ -381,20 +381,44 @@ Custom property                             | Description                       
       },
 
 
-      // Play/Pause controls
+      _startPlaying() {
+        player.$.audio.play().then(_ => {
+          if ('mediaSession' in navigator) {
+            navigator.mediaSession.metadata = new MediaMetadata({
+              title: this.title,
+            });
 
+            navigator.mediaSession.setActionHandler('play', this.playPause());
+            navigator.mediaSession.setActionHandler('pause', this.pause());
+            navigator.mediaSession.setActionHandler('seekbackward',
+              this._skipReverseByInterval(new CustomEvent('skip', { 'detail': {'key': 'left'} }))
+            );
+            navigator.mediaSession.setActionHandler('seekforward',
+              this._skipReverseByInterval(new CustomEvent('skip', { 'detail': {'key': 'right'} }))
+            );
+            navigator.mediaSession.setActionHandler('previoustrack',
+              this._skipReverseByInterval(new CustomEvent('skip', { 'detail': {'key': 'down'} }))
+            );
+            navigator.mediaSession.setActionHandler('nexttrack',
+              this._skipReverseByInterval(new CustomEvent('skip', { 'detail': {'key': 'up'} }))
+            );
+          }
+        });
+      },
+
+      // Play/Pause controls
       playPause: function(e){
         if (!!e) e.preventDefault();
         var player = this;
 
         if ( player.canBePlayed ) {
-          return player.isPlaying ? player.$.audio.pause() : player.$.audio.play();
+          return player.isPlaying ? player.$.audio.pause() : _startPlaying();
         } else if (player.preload === 'none') {
           // If player can't be played, because audio wasn't pre-loaded
           // due to the preload="none" property set,
           // load the audio file at this point and start playing it immediately
           player.$.audio.load();
-          player.$.audio.play();
+          _startPlaying();
         }
       },
 
@@ -405,7 +429,7 @@ Custom property                             | Description                       
         if (!!e) e.preventDefault();
         var player = this;
         player.$.audio.currentTime = 0;
-        if ( !player.isPlaying ) player.$.audio.play();
+        if ( !player.isPlaying ) _startPlaying();
       },
 
 
@@ -426,7 +450,7 @@ Custom property                             | Description                       
         // If player has auto-play attribute set,
         // it ignores preload="none" property and starts playing on load.
         // This behavior corresponds to the native audio element behavior.
-        if (player.autoPlay) player.$.audio.play();
+        if (player.autoPlay) _startPlaying();
       },
 
 
@@ -464,7 +488,7 @@ Custom property                             | Description                       
         }
 
         player._updatePlayPosition(newTime);
-        if (!player.isPlaying) player.$.audio.play();
+        if (!player.isPlaying) _startPlaying();
       },
 
 
@@ -543,7 +567,7 @@ Custom property                             | Description                       
 
         if (player.canBePlayed) {
           player._updateProgressBar(e);
-          if (!player.isPlaying) player.$.audio.play();
+          if (!player.isPlaying) _startPlaying();
 
           // When preload="none" is being used,
           // player should first try to load the audio,
@@ -552,7 +576,7 @@ Custom property                             | Description                       
           player.$.audio.load();
           player.$.audio.addEventListener('loadedmetadata', function() {
             player._updateProgressBar(e);
-            if (!player.isPlaying) player.$.audio.play();
+            if (!player.isPlaying) _startPlaying();
           }, false);
         }
       },
@@ -604,7 +628,7 @@ Custom property                             | Description                       
 
         if (player.isPlaying) {
           player.$.audio.pause();
-          player.$.audio.play();
+          _startPlaying();
         }
       },
 
