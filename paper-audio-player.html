@@ -381,7 +381,7 @@ Custom property                             | Description                       
       },
 
 
-      _startPlaying() {
+      _startPlaying: function() {
         player.$.audio.play().then(_ => {
           if ('mediaSession' in navigator) {
             navigator.mediaSession.metadata = new MediaMetadata({
